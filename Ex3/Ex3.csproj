@@ -112,8 +112,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ConnectionModel.cs" />
     <Compile Include="Models\FileModel.cs" />
+    <Compile Include="Models\FlightClient.cs" />
     <Compile Include="Models\FlightData.cs" />
+    <Compile Include="Models\IFlightClient.cs" />
     <Compile Include="Models\IModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
