@@ -8,11 +8,22 @@ namespace Ex3.Models
 {
     public class FileModel : IModel
     {
-        private Queue<FlightData> DataQueue;
+
+        private IList<FlightData> DataList;
+        private int index;
 
         public FileModel(string path)
         {
             InitData(path);
+        }
+
+        public FileModel(FileModel model)
+        {
+            foreach (FlightData data in model.DataList)
+            {
+                this.DataList.Add(new FlightData(data.Lat, data.Lon));
+            }
+            this.index = 0;
         }
 
         /// <summary>
@@ -23,7 +34,7 @@ namespace Ex3.Models
         {
             FlightData[] arr = ReadData(path);
 
-            this.DataQueue = new Queue<FlightData>();
+            this.DataList = new List<FlightData>();
 
             if (arr == null)
             {
@@ -32,7 +43,7 @@ namespace Ex3.Models
 
             foreach (FlightData data in arr)
             {
-                this.DataQueue.Enqueue(data);
+                this.DataList.Add(data);
             }
         }
 
@@ -49,7 +60,9 @@ namespace Ex3.Models
                 return null;
             }
             string[] lines;
+
             lines = File.ReadAllLines(path);
+
 
             FlightData[] data = new FlightData[lines.Length];
 
@@ -67,12 +80,12 @@ namespace Ex3.Models
 
         public FlightData GetNextFlightData()
         {
-            if (this.DataQueue.Count == 0)
+            if (this.index >= this.DataList.Count)
             {
                 return null;
             }
 
-            return this.DataQueue.Dequeue();
+            return this.DataList[this.index];
         }
     }
 }

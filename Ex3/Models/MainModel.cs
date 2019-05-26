@@ -35,7 +35,7 @@ namespace Ex3.Models
             if (this.models.ContainsKey(path))
             {
                 this.models.TryGetValue(path, out model);
-                return model;
+                return new FileModel((FileModel)model);
             }
 
             this.models[path] = new FileModel(path);
