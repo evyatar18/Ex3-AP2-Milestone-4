@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Net;
-using System.Net.Sockets;
 using System.Web;
 
 namespace Ex3.Models
@@ -20,7 +17,14 @@ namespace Ex3.Models
 
         public FlightData GetNextFlightData()
         {
-            throw new NotImplementedException();
+            string[] requests = { "get /position/latitude-deg", "get /position/longitude-deg" };
+            this.client.SendLine("get /position/latitude-deg");
+            int lat = int.Parse(this.client.GetLine());
+
+            this.client.SendLine("get /position/longitude-deg");
+            int lon = int.Parse(this.client.GetLine());
+
+            return new FlightData(lat, lon);
         }
     }
 }

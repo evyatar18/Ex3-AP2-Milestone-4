@@ -17,6 +17,7 @@ namespace Ex3.Models
         void Close();
 
         void SendLine(string line);
-        string ReadLine();
+        void SendLines(IList<string> lines);
+        string GetLine();
     }
 }

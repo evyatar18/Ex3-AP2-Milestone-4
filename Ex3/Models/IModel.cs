@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ex3.Models
 {
-    interface IModel
+    public interface IModel
     {
         /// <summary>
         /// Get the next FlightData

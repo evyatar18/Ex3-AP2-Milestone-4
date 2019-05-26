@@ -89,16 +89,31 @@ namespace Ex3.Models
             this.clientReader = new BinaryReader(client.GetStream());
         }
 
-        public string ReadLine()
+        public string GetLine()
         {
             return this.clientReader.ReadString();
         }
 
         public void SendLine(string line)
         {
-            this.clientWriter.Write(line.ToCharArray());
-            this.clientWriter.Write('\r');
-            this.clientWriter.Write('\n');
+            List<string> lines = new List<string>();
+            lines.Add(line);
+            SendLines(lines);
+        }
+
+        public void SendLines(IList<string> lines)
+        {
+            if (!IsOpen)
+                throw new InvalidOperationException("Cannot send lines to unopened socket.");
+
+            foreach (string line in lines)
+            {
+                clientWriter.Write(line.ToCharArray());
+                clientWriter.Write('\r');
+                clientWriter.Write('\n');
+            }
+
+            clientWriter.Flush();
         }
     }
 }
