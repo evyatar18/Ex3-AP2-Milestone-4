@@ -29,12 +29,13 @@ namespace Ex3.Models
             return model;
         }
 
-        public IModel AddFilenModel(string path)
+        public IModel AddFileModel(string path)
         {
             IModel model;
             if (this.models.ContainsKey(path))
             {
-                return null;
+                this.models.TryGetValue(path, out model);
+                return model;
             }
 
             this.models[path] = new FileModel(path);
