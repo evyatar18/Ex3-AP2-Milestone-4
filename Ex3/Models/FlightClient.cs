@@ -54,8 +54,8 @@ namespace Ex3.Models
         private TcpClient client = null;
         public bool IsOpen { get => client != null && client.Connected; }
 
-        private BinaryWriter clientWriter;
-        private BinaryReader clientReader;
+        private StreamWriter clientWriter;
+        private StreamReader clientReader;
 
         public void Close()
         {
@@ -85,21 +85,14 @@ namespace Ex3.Models
             }
             catch (Exception) { client = null; return; }
 
-            this.clientWriter = new BinaryWriter(client.GetStream());
-            this.clientReader = new BinaryReader(client.GetStream());
+            this.clientWriter = new StreamWriter(client.GetStream());
+            this.clientReader = new StreamReader(client.GetStream());
         }
 
-        public string GetLine()
-        {
-            return this.clientReader.ReadString();
-        }
+        public string GetLine() => clientReader.ReadLine();
 
-        public void SendLine(string line)
-        {
-            List<string> lines = new List<string>();
-            lines.Add(line);
-            SendLines(lines);
-        }
+        public void SendLine(string line) =>
+            SendLines(new List<string> { line });
 
         public void SendLines(IList<string> lines)
         {
@@ -108,7 +101,7 @@ namespace Ex3.Models
 
             foreach (string line in lines)
             {
-                clientWriter.Write(line.ToCharArray());
+                clientWriter.Write(line);
                 clientWriter.Write('\r');
                 clientWriter.Write('\n');
             }
