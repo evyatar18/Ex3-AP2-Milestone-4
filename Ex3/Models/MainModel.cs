@@ -20,12 +20,26 @@ namespace Ex3.Models
             IModel model;
             if (this.models.ContainsKey($"{serverIp}:{serverPort}"))
             {
-                this.models.TryGetValue($"{serverIp}:{serverPort}", out model);
+                model = this.models[$"{serverIp}:{serverPort}"];
                 return model;
             }
 
             this.models[$"{serverIp}:{serverPort}"] = new ConnectionModel(serverIp, serverPort);
-            this.models.TryGetValue($"{serverIp}:{serverPort}", out model);
+            model = this.models[$"{serverIp}:{serverPort}"];
+            return model;
+        }
+
+        public IModel AddSaveModel(string path, string serverIp, int serverPort)
+        {
+            IModel model;
+            if (this.models.ContainsKey($"{path}:{serverIp}:{serverPort}"))
+            {
+                return null;
+            }
+
+            IModel decorated = AddConnectionModel(serverIp, serverPort);
+            this.models[$"{path}:{serverIp}:{serverPort}"] = new SaveModel(decorated, path);
+            model = this.models[$"{serverIp}:{serverPort}"];
             return model;
         }
 
@@ -34,12 +48,12 @@ namespace Ex3.Models
             IModel model;
             if (this.models.ContainsKey(path))
             {
-                this.models.TryGetValue(path, out model);
+                model = this.models[path];
                 return new FileModel((FileModel)model);
             }
 
             this.models[path] = new FileModel(path);
-            this.models.TryGetValue(path, out model);
+            model = this.models[path];
             return model;
         }
     }

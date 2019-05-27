@@ -119,6 +119,7 @@
     <Compile Include="Models\IFlightClient.cs" />
     <Compile Include="Models\IModel.cs" />
     <Compile Include="Models\MainModel.cs" />
+    <Compile Include="Models\SaveModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
