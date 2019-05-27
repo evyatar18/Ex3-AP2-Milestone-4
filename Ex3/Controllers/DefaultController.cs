@@ -46,9 +46,10 @@ namespace Ex3.Controllers
         }
 
         [HttpPost]
-        public FlightData GetData()
+        public string GetData()
         {
-            return localModel.GetNextFlightData();
+            FlightData data = localModel.GetNextFlightData();
+            return $"{data.Lat},{data.Lon}";
         }
     }
 }
