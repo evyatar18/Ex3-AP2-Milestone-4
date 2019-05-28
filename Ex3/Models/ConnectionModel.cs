@@ -8,7 +8,7 @@ namespace Ex3.Models
 {
     public class ConnectionModel : IModel
     {
-        private static Mutex mutex = new Mutex();
+        private Mutex mutex = new Mutex();
 
         private IFlightClient client;
 
