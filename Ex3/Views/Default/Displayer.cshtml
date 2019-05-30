@@ -5,7 +5,7 @@
 
 <style>
     .canvas {
-        background-image: url("~/Content/canvas_bg.png");
+        background-image: url("/Content/canvas_bg.png");
         background-size: 100% 100%;
     }
 </style>
@@ -18,9 +18,32 @@
 <script src="~/Scripts/graph/kuky.js"></script>
 
 <script>
+
+    function canvas_resize(graph) {
+        var c = $("#canvas")[0];
+        var rel = c.height / c.width;
+
+        return function () {
+            var width = window.innerWidth;
+            var height = window.innerHeight;
+
+            c.width = width;
+            c.height = height;
+            graph.recreate();
+        };
+    }
+
     $(function () {
         var graph = scalableScaledGraphModule(
             document.getElementById("canvas"), -180, 180, -90, 90);
+
+        var resizer = canvas_resize(graph);
+        resizer();
+        // on window resize, try resizing canvas
+        $(window).resize(resizer);
+
+
+        
 
         var timeout = @ViewBag.timePerSec;
         var url = "@Url.Action("GetData", "Default")";
