@@ -1,0 +1,32 @@
+﻿
+@{
+    ViewBag.Title = "Displayer";
+}
+
+<style>
+    .canvas {
+        background-image: url("~/Content/canvas_bg.png");
+        background-size: 100% 100%;
+    }
+</style>
+
+<canvas class="canvas" id="canvas">
+
+</canvas>
+
+<script src="~/Scripts/graph/graphDrawer.js"></script>
+<script src="~/Scripts/graph/kuky.js"></script>
+
+<script>
+    $(function () {
+        var graph = scalableScaledGraphModule(
+            document.getElementById("canvas"), -180, 180, -90, 90);
+
+        var timeout = @ViewBag.timePerSec;
+        var url = "@Url.Action("GetData", "Default")";
+
+        if (timeout <= 0) display_once(url, graph);
+        else display_multiple(url, graph, timeout);
+    });
+</script>
+
