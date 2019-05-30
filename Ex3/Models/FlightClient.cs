@@ -61,7 +61,7 @@ namespace Ex3.Models
         {
             if (IsOpen)
             {
-                try { clientWriter.Dispose(); clientReader.Dispose();  client.Close(); }
+                try { clientWriter.Dispose(); clientReader.Dispose(); client.Close(); }
                 catch (Exception) { }
             }
 
@@ -90,6 +90,7 @@ namespace Ex3.Models
         }
 
         public string GetLine() => clientReader.ReadLine();
+
 
         public void SendLine(string line) =>
             SendLines(new List<string> { line });

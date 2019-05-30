@@ -10,13 +10,13 @@ namespace Ex3.Models
     /// </summary>
     public class FlightData
     {
-        private int lat = 0;
-        public int Lat => lat;
+        private double lat = 0;
+        public double Lat => lat;
 
-        private int lon = 0;
-        public int Lon => lon;
+        private double lon = 0;
+        public double Lon => lon;
 
-        public FlightData (int lat, int lon) {
+        public FlightData (double lat, double lon) {
             this.lat = lat;
             this.lon = lon;
         }

@@ -18,17 +18,27 @@ namespace Ex3.Models
             this.client.Open();
         }
 
+        private double RetrieveDouble()
+        {
+            string line = client.GetLine();
+
+            double ret = double.NaN;
+
+            double.TryParse(line.Split('\'')[1], out ret);
+            return ret;
+        }
+
         public FlightData GetNextFlightData()
         {
             mutex.WaitOne();  // Wait until it is safe to enter. 
 
             // get lat
             this.client.SendLine("get /position/latitude-deg");
-            int lat = int.Parse(this.client.GetLine());
+            double lat = RetrieveDouble();
 
             // get lon
             this.client.SendLine("get /position/longitude-deg");
-            int lon = int.Parse(this.client.GetLine());
+            double lon = RetrieveDouble();
 
             // build the data
             FlightData data = new FlightData(lat, lon);
