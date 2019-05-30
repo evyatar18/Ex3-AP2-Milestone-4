@@ -20,7 +20,7 @@ function getFloats(url, recv) {
 
 // recieves an array of floats and puts them inside the graph as a 2d point
 function addFloats(floats, graph) {
-    graph.addPoint(new Point(floats[0], floats[1]));
+    graph.addPoint(new Point(floats[1], floats[0]));
 }
 
 function freq_to_delay(freq) {
