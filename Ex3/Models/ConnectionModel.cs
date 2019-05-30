@@ -32,20 +32,30 @@ namespace Ex3.Models
         {
             mutex.WaitOne();  // Wait until it is safe to enter. 
 
-            // get lat
-            this.client.SendLine("get /position/latitude-deg");
-            double lat = RetrieveDouble();
+            try
+            {
+                // get lat
+                this.client.SendLine("get /position/latitude-deg");
+                double lat = RetrieveDouble();
 
-            // get lon
-            this.client.SendLine("get /position/longitude-deg");
-            double lon = RetrieveDouble();
+                // get lon
+                this.client.SendLine("get /position/longitude-deg");
+                double lon = RetrieveDouble();
 
-            // build the data
-            FlightData data = new FlightData(lat, lon);
+                // build the data
+                FlightData data = new FlightData(lat, lon);
 
-            mutex.ReleaseMutex();  // Release the Mutex.
-
-            return data;
+                return data;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+            finally
+            {
+                // release the mutex even if an exception occurs
+                mutex.ReleaseMutex();
+            }
         }
     }
 }
