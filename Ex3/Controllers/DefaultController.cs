@@ -12,34 +12,39 @@ namespace Ex3.Controllers
     public class DefaultController : Controller
     {
         private static MainModel mainModel = new MainModel();
-        private IModel localModel = null;
 
-        // GET: Default
+        // GET: Hello
         public ActionResult Index()
         {
-            return View();
+            return View("Hello");
+        }
+
+        private IModel LocalModel
+        {
+            set => Session["LocalModel"] = value;
+            get => (IModel) Session["LocalModel"];
         }
 
         [HttpGet]
         public ActionResult display(string ip, int port, int timePerSec)
         {
-            this.localModel = mainModel.AddConnectionModel(ip, port);
+            LocalModel = mainModel.AddConnectionModel(ip, port);
             ViewBag.timePerSec = timePerSec;
-            return View();
+            return View("Displayer");
         }
 
-        [HttpGet]
-        public ActionResult display(string path, int timePerSec)
-        {
-            this.localModel = mainModel.AddFileModel(path);
-            ViewBag.timePerSec = timePerSec;
-            return View();
-        }
+        //[HttpGet]
+        //public ActionResult display(string path, int timePerSec)
+        //{
+        //    this.localModel = mainModel.AddFileModel(path);
+        //    ViewBag.timePerSec = timePerSec;
+        //    return View();
+        //}
 
         [HttpGet]
         public ActionResult save(string ip, int port, int timePerSec, int seconds, string path)
         {
-            this.localModel = mainModel.AddSaveModel(path, ip, port);
+            LocalModel = mainModel.AddSaveModel(path, ip, port);
             ViewBag.timePerSec = timePerSec;
             ViewBag.seconds = seconds;
             return View();
@@ -48,8 +53,13 @@ namespace Ex3.Controllers
         [HttpPost]
         public string GetData()
         {
-            FlightData data = localModel.GetNextFlightData();
-            return $"{data.Lat},{data.Lon}";
+            FlightData data = LocalModel?.GetNextFlightData();
+            return data == null ? "NaN,NaN" : $"{data.Lat},{data.Lon}";
+        }
+
+        public ActionResult Hello()
+        {
+            return View();
         }
     }
 }
