@@ -41,12 +41,9 @@
         resizer();
         // on window resize, try resizing canvas
         $(window).resize(resizer);
-
-
         
-
         var timeout = @ViewBag.timePerSec;
-        var url = "@Url.Action("GetData", "Default")";
+        var url = "@Url.RouteUrl("getData")";
 
         if (timeout <= 0) display_once(url, graph);
         else display_multiple(url, graph, timeout);

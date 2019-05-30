@@ -13,14 +13,22 @@ namespace Ex3
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            routes.MapRoute("ad", "hey",
-                defaults: new { controller = "Default", action="Hello" });
+            // handles display/ip/port/frequency
             routes.MapRoute("display", "display/{ip}/{port}/{timePerSec}",
-                defaults: new { controller = "Default", action = "display" });
-            //routes.MapRoute("display", "display/GetData",
-            //    defaults: new { controller = "Default", action = "GetData" });
-            //routes.MapRoute("display", "display/{path}/{timePerSec}");
-            routes.MapRoute("save", "save/{ip}/{port}/{timePerSec}/{seconds}/{path}");
+                defaults: new { controller = "Default", action = "Display" },
+                constraints: new { ip = @"\d{0,3}.\d{0,3}.\d{0,3}.\d{0,3}" });
+
+            // handles /display/filename/frequency
+            routes.MapRoute("displaySaved", "display/{path}/{timePerSec}",
+                new { controller = "Default", action = "DisplaySaved" });
+
+            // handles /display/getdata
+            routes.MapRoute("getData", "display/getdata",
+                new { controller = "Default", action = "GetData" });
+
+            // handles /save/ip/port/frequency/sec/path
+            routes.MapRoute("save", "save/{ip}/{port}/{timePerSec}/{seconds}/{path}",
+                new { controller = "Default", action = "Save" });
 
 
             routes.MapRoute(
