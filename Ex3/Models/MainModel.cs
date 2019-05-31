@@ -42,16 +42,16 @@ namespace Ex3.Models
         /// <param name="serverIp">The ip</param>
         /// <param name="serverPort">The port</param>
         /// <returns>The ConnectionModel with the ip and the port and the file</returns>
-        public IModel AddSaveModel(string path, string serverIp, int serverPort)
+        public IModel AddSaveModel(string path, string serverIp, int serverPort, int numOfIterations)
         {
             IModel model;
             if (this.models.ContainsKey($"{path}:{serverIp}:{serverPort}"))
             {
-                return null;
+                return new SaveModel((SaveModel)this.models[$"{path}:{serverIp}:{serverPort}"], numOfIterations);
             }
 
             IModel decorated = AddConnectionModel(serverIp, serverPort);
-            this.models[$"{path}:{serverIp}:{serverPort}"] = new SaveModel(decorated, path);
+            this.models[$"{path}:{serverIp}:{serverPort}"] = new SaveModel(decorated, path, numOfIterations);
             model = this.models[$"{serverIp}:{serverPort}"];
             return model;
         }

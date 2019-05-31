@@ -44,10 +44,9 @@ namespace Ex3.Controllers
         [HttpGet]
         public ActionResult save(string ip, int port, int timePerSec, int seconds, string path)
         {
-            LocalModel = mainModel.AddSaveModel(path, ip, port);
+            LocalModel = mainModel.AddSaveModel(path, ip, port, timePerSec * seconds);
             ViewBag.timePerSec = timePerSec;
-            ViewBag.seconds = seconds;
-            return View();
+            return View("Displayer");
         }
 
         [HttpPost]
