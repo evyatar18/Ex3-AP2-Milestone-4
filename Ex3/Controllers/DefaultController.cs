@@ -39,7 +39,7 @@ namespace Ex3.Controllers
         }
 
         [HttpGet]
-        public ActionResult save(string ip, int port, int timePerSec, int seconds, string path)
+        public ActionResult Save(string ip, int port, int timePerSec, int seconds, string path)
         {
             LocalModel = mainModel.AddSaveModel(path, ip, port, timePerSec * seconds);
             ViewBag.timePerSec = timePerSec;

@@ -9,6 +9,7 @@ namespace Ex3.Models
     public class MainModel
     {
         private IDictionary<string, IModel> models;
+        public const string SCENARIO_FILE = "~/App_Data/{0}.txt";
 
         public MainModel()
         {
@@ -44,6 +45,8 @@ namespace Ex3.Models
         /// <returns>The ConnectionModel with the ip and the port and the file</returns>
         public IModel AddSaveModel(string path, string serverIp, int serverPort, int numOfIterations)
         {
+            string filePath = HttpContext.Current.Server.MapPath(String.Format(SCENARIO_FILE, path));
+
             IModel model;
             if (this.models.ContainsKey($"{path}:{serverIp}:{serverPort}"))
             {
@@ -51,8 +54,8 @@ namespace Ex3.Models
             }
 
             IModel decorated = AddConnectionModel(serverIp, serverPort);
-            this.models[$"{path}:{serverIp}:{serverPort}"] = new SaveModel(decorated, path, numOfIterations);
-            model = this.models[$"{serverIp}:{serverPort}"];
+            this.models[$"{path}:{serverIp}:{serverPort}"] = new SaveModel(decorated, filePath, numOfIterations);
+            model = this.models[$"{path}:{serverIp}:{serverPort}"];
             return model;
         }
 
@@ -63,6 +66,7 @@ namespace Ex3.Models
         /// <returns>The FileModel with the file</returns>
         public IModel AddFileModel(string path)
         {
+            string filePath = HttpContext.Current.Server.MapPath(String.Format(SCENARIO_FILE, path));
             IModel model;
             if (this.models.ContainsKey(path))
             {
@@ -70,7 +74,7 @@ namespace Ex3.Models
                 return new FileModel((FileModel)model);
             }
 
-            this.models[path] = new FileModel(path);
+            this.models[path] = new FileModel(filePath);
             model = this.models[path];
             return model;
         }

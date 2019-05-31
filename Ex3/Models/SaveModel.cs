@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web;
 
 namespace Ex3.Models
@@ -11,13 +12,14 @@ namespace Ex3.Models
         private IModel decorated;
         private string path;
         private int numOfIterations;
+        private FileStream fs;
 
         public SaveModel(IModel model, string path, int numOfIterations)
         {
             this.decorated = model;
             this.path = path;
             this.numOfIterations = numOfIterations;
-            File.WriteAllText(path, String.Empty);
+            CreateFile(path);
         }
 
         public SaveModel(SaveModel model, int numOfIterations)
@@ -25,7 +27,16 @@ namespace Ex3.Models
             this.decorated = model.decorated;
             this.path = model.path;
             this.numOfIterations = numOfIterations;
-            File.WriteAllText(path, String.Empty);
+            CreateFile(path);
+        }
+
+        private void CreateFile(string path)
+        {
+            if (File.Exists(path))
+            {
+                File.Delete(path);
+            }
+            this.fs = File.Create(path);
         }
 
         public FlightData GetNextFlightData()
@@ -35,13 +46,21 @@ namespace Ex3.Models
             if (numOfIterations > 0)
             {
                 numOfIterations--;
-                using (StreamWriter sw = File.AppendText(this.path))
+                AddText($"{data.Lat},{data.Lon}{Environment.NewLine}");
+
+                if (numOfIterations == 0)
                 {
-                    sw.WriteLine($"{data.Lat},{data.Lon}");
+                    fs.Close();
                 }
             }
 
             return data;
+        }
+
+        private void AddText(string value)
+        {
+            byte[] info = new UTF8Encoding(true).GetBytes(value);
+            fs.Write(info, 0, info.Length);
         }
     }
 }
