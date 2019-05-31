@@ -14,10 +14,7 @@ namespace Ex3.Controllers
         private static MainModel mainModel = new MainModel();
 
         // GET: Hello
-        public ActionResult Index()
-        {
-            return View("Hello");
-        }
+        public ActionResult Index() => View();
 
         private IModel LocalModel
         {
@@ -26,20 +23,20 @@ namespace Ex3.Controllers
         }
 
         [HttpGet]
-        public ActionResult display(string ip, int port, int timePerSec)
+        public ActionResult Display(string ip, int port, int timePerSec)
         {
             LocalModel = mainModel.AddConnectionModel(ip, port);
             ViewBag.timePerSec = timePerSec;
             return View("Displayer");
         }
 
-        //[HttpGet]
-        //public ActionResult display(string path, int timePerSec)
-        //{
-        //    this.localModel = mainModel.AddFileModel(path);
-        //    ViewBag.timePerSec = timePerSec;
-        //    return View();
-        //}
+        [HttpGet]
+        public ActionResult DisplaySaved(string path, int timePerSec)
+        {
+            LocalModel = mainModel.AddFileModel(path);
+            ViewBag.timePerSec = timePerSec;
+            return View("Displayer");
+        }
 
         [HttpGet]
         public ActionResult save(string ip, int port, int timePerSec, int seconds, string path)
@@ -56,9 +53,5 @@ namespace Ex3.Controllers
             return data == null ? "NaN,NaN" : $"{data.Lat},{data.Lon}";
         }
 
-        public ActionResult Hello()
-        {
-            return View();
-        }
     }
 }

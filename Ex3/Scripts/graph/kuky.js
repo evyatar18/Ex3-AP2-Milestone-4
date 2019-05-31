@@ -47,7 +47,7 @@ function display_multiple(url, graph, freq) {
     var timerid = setInterval(function () {
         getFloats(url, function (floats) {
             // if done with stream
-            if (floats[0] == NaN) {
+            if (isNaN(floats[0])) {
                 clear();
                 return;
             }
