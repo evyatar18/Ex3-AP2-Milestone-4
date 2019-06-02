@@ -15,7 +15,8 @@ namespace Ex3
 
             // handles display/ip/port/frequency
             routes.MapRoute("display", "display/{ip}/{port}/{timePerSec}",
-                defaults: new { controller = "Default", action = "Display" },
+                defaults: new { controller = "Default", action = "Display",
+                    timePerSec=-1 },
                 constraints: new { ip = @"\d{0,3}.\d{0,3}.\d{0,3}.\d{0,3}" });
 
             // handles /display/filename/frequency
