@@ -92,18 +92,18 @@ function graphModule(canvas) {
 
         if (!lastPoint) return; // no last point
 
-        /* draw the gray current location circle */
-        ctx.fillStyle = circleStroke;
-        drawFilledCircle(lastPoint, circleR1);
+        /* draw the red current location circle */
+        ctx.fillStyle = baseStroke;
+        drawFilledCircle(lastPoint, circleR2);
 
         /* draw the line between all the points */
         ctx.strokeStyle = baseStroke;
         ctx.lineWidth = baseStrokeWidth;
         drawLine();
 
-        /* draw the red current location circle */
-        ctx.fillStyle = baseStroke;
-        drawFilledCircle(lastPoint, circleR2);
+        /* draw the gray current location circle */
+        ctx.fillStyle = circleStroke;
+        drawFilledCircle(lastPoint, circleR1);
     }
 
     return {

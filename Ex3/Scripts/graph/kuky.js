@@ -20,7 +20,7 @@ function getFloats(url, recv) {
 
 // recieves an array of floats and puts them inside the graph as a 2d point
 function addFloats(floats, graph) {
-    graph.addPoint(new Point(floats[1], floats[0]));
+    graph.addPoint(new Point(floats[0], floats[1]));
 }
 
 function freq_to_delay(freq) {
@@ -39,7 +39,7 @@ function display_once(url, graph) {
 // displays point data from url on the given graph with repetition delays
 // between points addition
 // returns a function which stops the interval
-function display_multiple(url, graph, freq) {
+function display_multiple(url, graph, freq, onFinish=null) {
 
     // stops the interval
     var clear;
@@ -49,6 +49,11 @@ function display_multiple(url, graph, freq) {
             // if done with stream
             if (isNaN(floats[0])) {
                 clear();
+
+                // run on finish
+                if (onFinish)
+                    onFinish();
+
                 return;
             }
 
