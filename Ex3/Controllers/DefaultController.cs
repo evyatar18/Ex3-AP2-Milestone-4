@@ -36,6 +36,7 @@ namespace Ex3.Controllers
         {
             LocalModel = mainModel.AddFileModel(path);
             ViewBag.timePerSec = timePerSec;
+            ViewBag.finishAlert = true;
             return View("Displayer");
         }
 

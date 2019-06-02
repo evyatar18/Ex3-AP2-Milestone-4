@@ -41,12 +41,20 @@
         resizer();
         // on window resize, try resizing canvas
         $(window).resize(resizer);
-        
+
         var timeout = @ViewBag.timePerSec;
         var url = "@Url.RouteUrl("getData")";
 
         if (timeout <= 0) display_once(url, graph);
-        else display_multiple(url, graph, timeout);
+        else {
+            
+            var finish_func = @(ViewBag.finishAlert==null ? 0 : 1);  
+
+            if (finish_func) finish_func = () => alert("Finished running.");
+            else finish_func = null;
+
+            display_multiple(url, graph, timeout, finish_func);
+        }
     });
 </script>
 
