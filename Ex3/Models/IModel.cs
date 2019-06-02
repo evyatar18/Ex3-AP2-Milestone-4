@@ -13,5 +13,7 @@ namespace Ex3.Models
         /// </summary>
         /// <returns>The next FlightData</returns>
         FlightData GetNextFlightData();
+
+        bool IsAlive { get; }
     }
 }

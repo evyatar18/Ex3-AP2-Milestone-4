@@ -12,10 +12,13 @@ namespace Ex3.Models
 
         private IFlightClient client;
 
+        public bool IsAlive { get; private set; }
+
         public ConnectionModel(string serverIp, int serverPort)
         {
             this.client = new FlightClient(serverIp, serverPort);
             this.client.Open();
+            IsAlive = true;
         }
 
         private double RetrieveDouble()
@@ -57,6 +60,7 @@ namespace Ex3.Models
             }
             catch (Exception)
             {
+                IsAlive = false;
                 return null;
             }
             finally

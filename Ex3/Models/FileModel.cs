@@ -12,9 +12,12 @@ namespace Ex3.Models
         private IList<FlightData> DataList;
         private int index;
 
+        public bool IsAlive { get; private set; }
+
         public FileModel(string path)
         {
             InitData(path);
+            IsAlive = true;
         }
 
         public FileModel(FileModel model)
@@ -85,6 +88,7 @@ namespace Ex3.Models
         {
             if (this.index >= this.DataList.Count)
             {
+                IsAlive = false;
                 return null;
             }
             int temp = this.index;

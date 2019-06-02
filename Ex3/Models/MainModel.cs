@@ -28,7 +28,10 @@ namespace Ex3.Models
             if (this.models.ContainsKey($"{serverIp}:{serverPort}"))
             {
                 model = this.models[$"{serverIp}:{serverPort}"];
-                return model;
+                
+                if (model.IsAlive)
+                    // only use alive models, otherwise recreate
+                    return model;
             }
 
             this.models[$"{serverIp}:{serverPort}"] = new ConnectionModel(serverIp, serverPort);

@@ -14,12 +14,15 @@ namespace Ex3.Models
         private int numOfIterations;
         private FileStream fs;
 
+        public bool IsAlive { get; private set; }
+
         public SaveModel(IModel model, string path, int numOfIterations)
         {
             this.decorated = model;
             this.path = path;
             this.numOfIterations = numOfIterations;
             CreateFile(path);
+            IsAlive = true;
         }
 
         public SaveModel(SaveModel model, int numOfIterations)
@@ -42,6 +45,9 @@ namespace Ex3.Models
         public FlightData GetNextFlightData()
         {
             FlightData data = this.decorated.GetNextFlightData();
+
+            if (data == null)
+                IsAlive = false;
 
             if (numOfIterations > 0)
             {
