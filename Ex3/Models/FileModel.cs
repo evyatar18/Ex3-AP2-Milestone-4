@@ -19,6 +19,7 @@ namespace Ex3.Models
 
         public FileModel(FileModel model)
         {
+            this.DataList = new List<FlightData>();
             foreach (FlightData data in model.DataList)
             {
                 this.DataList.Add(new FlightData(data.Lat, data.Lon));
@@ -69,8 +70,8 @@ namespace Ex3.Models
             for (int i = 0; i < lines.Length; i++)
             {
                 string[] split = lines[i].Split(',');
-                int lat = int.Parse(split[0]);
-                int lon = int.Parse(split[1]);
+                double lat = double.Parse(split[0]);
+                double lon = double.Parse(split[1]);
 
                 data[i] = new FlightData(lat, lon);
             }
@@ -84,8 +85,9 @@ namespace Ex3.Models
             {
                 return null;
             }
-
-            return this.DataList[this.index];
+            int temp = this.index;
+            this.index++;
+            return this.DataList[temp];
         }
     }
 }
