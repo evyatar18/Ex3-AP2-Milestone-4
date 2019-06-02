@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
@@ -33,6 +34,15 @@ namespace Ex3.Controllers
         [HttpGet]
         public ActionResult DisplaySaved(string path, int timePerSec)
         {
+            IPAddress temp;
+            // if it is "display/ip/port"
+            if (IPAddress.TryParse(path, out temp))
+            {
+                /* ip = path (= num.num.num.num)
+                 * port = timePerSec (is the port)
+                 */
+                return Display(path, timePerSec, -1);
+            }
             LocalModel = mainModel.AddFileModel(path);
             ViewBag.timePerSec = timePerSec;
             return View("Displayer");
