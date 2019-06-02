@@ -34,13 +34,13 @@ namespace Ex3.Models
 
             try
             {
-                // get lat
-                this.client.SendLine("get /position/latitude-deg");
-                double lat = RetrieveDouble();
-
                 // get lon
                 this.client.SendLine("get /position/longitude-deg");
                 double lon = RetrieveDouble();
+
+                // get lat
+                this.client.SendLine("get /position/latitude-deg");
+                double lat = RetrieveDouble();
 
                 // get lon
                 this.client.SendLine("get /controls/engines/current-engine/throttle");
