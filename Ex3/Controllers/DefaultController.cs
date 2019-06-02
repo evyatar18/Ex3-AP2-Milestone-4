@@ -60,7 +60,7 @@ namespace Ex3.Controllers
                 return "NaN,NaN";
             }
 
-            return $"{data.Lat},{data.Lon}";
+            return $"{data.Lon},{data.Lat}";
         }
 
     }
