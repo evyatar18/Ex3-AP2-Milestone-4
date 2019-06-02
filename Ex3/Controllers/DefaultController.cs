@@ -50,7 +50,15 @@ namespace Ex3.Controllers
         public string GetData()
         {
             FlightData data = LocalModel?.GetNextFlightData();
-            return data == null ? "NaN,NaN" : $"{data.Lat},{data.Lon}";
+
+            if (data == null)
+            {
+                // free memory pointer
+                LocalModel = null;
+                return "NaN,NaN";
+            }
+
+            return $"{data.Lat},{data.Lon}";
         }
 
     }
