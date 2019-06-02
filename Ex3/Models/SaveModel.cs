@@ -52,7 +52,8 @@ namespace Ex3.Models
             if (numOfIterations > 0)
             {
                 numOfIterations--;
-                AddText($"{data.Lon},{data.Lat},{data.Throttle},{data.Rudder}{Environment.NewLine}");
+                if (data != null)
+                    AddText($"{data.Lon},{data.Lat},{data.Throttle},{data.Rudder}{Environment.NewLine}");
 
                 if (numOfIterations == 0)
                 {
