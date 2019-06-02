@@ -42,8 +42,16 @@ namespace Ex3.Models
                 this.client.SendLine("get /position/longitude-deg");
                 double lon = RetrieveDouble();
 
+                // get lon
+                this.client.SendLine("get /controls/engines/current-engine/throttle");
+                double throttle = RetrieveDouble();
+
+                // get lon
+                this.client.SendLine("get /controls/flight/rudder");
+                double rudder = RetrieveDouble();
+
                 // build the data
-                FlightData data = new FlightData(lat, lon);
+                FlightData data = new FlightData(lat, lon, throttle, rudder);
 
                 return data;
             }

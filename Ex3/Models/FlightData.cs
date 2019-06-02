@@ -16,9 +16,17 @@ namespace Ex3.Models
         private double lon = 0;
         public double Lon => lon;
 
-        public FlightData (double lat, double lon) {
+        private double rudder = 0;
+        public double Rudder => rudder;
+
+        private double throttle = 0;
+        public double Throttle => throttle;
+
+        public FlightData (double lat, double lon, double throttle, double rudder) {
             this.lat = lat;
             this.lon = lon;
+            this.throttle = throttle;
+            this.rudder = rudder;
         }
     }
 }

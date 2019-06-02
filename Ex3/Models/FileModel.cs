@@ -22,7 +22,7 @@ namespace Ex3.Models
             this.DataList = new List<FlightData>();
             foreach (FlightData data in model.DataList)
             {
-                this.DataList.Add(new FlightData(data.Lat, data.Lon));
+                this.DataList.Add(new FlightData(data.Lat, data.Lon, data.Throttle, data.Rudder));
             }
             this.index = 0;
         }
@@ -70,10 +70,12 @@ namespace Ex3.Models
             for (int i = 0; i < lines.Length; i++)
             {
                 string[] split = lines[i].Split(',');
-                double lat = double.Parse(split[0]);
-                double lon = double.Parse(split[1]);
+                double lon = double.Parse(split[0]);
+                double lat = double.Parse(split[1]);
+                double throttle = double.Parse(split[2]);
+                double rudder = double.Parse(split[3]);
 
-                data[i] = new FlightData(lat, lon);
+                data[i] = new FlightData(lat, lon, throttle, rudder);
             }
 
             return data;
